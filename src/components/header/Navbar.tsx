@@ -161,7 +161,7 @@ const Navbar = () => {
         <Toolbar >
           <Grid container columnSpacing={2}>
             <Grid>
-              <MuiLink component={RouterLink} to={url} >
+              <MuiLink component={RouterLink} to="" >
                 {isuserauth && userimage != "" ? 
                   <img style={{ borderRadius: "50%" }} src={userimage} height={40} /> :
                   <Skeleton variant="circular" height={40} width={40} />

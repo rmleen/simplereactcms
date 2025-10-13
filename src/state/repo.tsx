@@ -125,19 +125,16 @@ export const getUser = createAsyncThunk("getUser", async (username?: string) => 
       return res.data;
     }
     else {
-      let username = "DSDmark";
+      let username = "";
       const res: AxiosResponse = await RepoServices.getUserInfo(username);
       return res.data;
     }
   } catch (err) {
-    console.log(err)
-    let username = "DSDmark";
-    const res: AxiosResponse = await RepoServices.getUserInfo(username);
-    return res.data;
+    return null;
   }
 })
 
-export const getRepoInfo = createAsyncThunk("getRepoInfo", async (params: IPageData) => {
+export const getRepoInfo = createAsyncThunk("getRepoInfo", async (params: IPageData, { rejectWithValue }) => {
   let res: AxiosResponse;
   try {
     if (params.username) {
@@ -145,54 +142,16 @@ export const getRepoInfo = createAsyncThunk("getRepoInfo", async (params: IPageD
       return res.data;
 
     } else {
-      params.username = "DSDmark";
+      params.username = "";
       res = await RepoServices.getRepo(params)
       return res.data;
     }
   } catch (err) {
-    params.username = "DSDmark"
-    res = await RepoServices.getRepo(params);
-    return res.data;
+
+    return rejectWithValue("Failed to retrieve");
   }
 })
 
-export const getFollowerInfo = createAsyncThunk("getFollowerInfo", async (params: IPageData) => {
-  let res: AxiosResponse;
-  try {
-    if (params.username) {
-      res = await RepoServices.getFollowers(params)
-      return res.data;
-
-    } else {
-      params.username = "DSDmark";
-      res = await RepoServices.getFollowers(params)
-      return res.data;
-    }
-  } catch (err) {
-    params.username = "DSDmark"
-    res = await RepoServices.getFollowers(params);
-    return res.data;
-  }
-})
-
-export const getFollowingInfo = createAsyncThunk("getFollowingInfo", async (params: IPageData) => {
-  let res: AxiosResponse;
-  try {
-    if (params.username) {
-      res = await RepoServices.getFollowing(params)
-      return res.data;
-
-    } else {
-      params.username = "DSDmark";
-      res = await RepoServices.getFollowing(params)
-      return res.data;
-    }
-  } catch (err) {
-    params.username = "DSDmark"
-    res = await RepoServices.getFollowing(params);
-    return res.data;
-  }
-})
 
 export const getUserAuth = createAsyncThunk("getUserAuth", async (params: IUserLogin, { rejectWithValue }) => {
   let res: AxiosResponse;

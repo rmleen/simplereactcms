@@ -2,7 +2,7 @@ import { httpRequest, IRepoServices } from "../utils"
 import { IPageData, IUser, IUserAuth,IUserLogin } from "../utils/interface";
 
 
-const BASE_URL = "https://api.github.com/users/"
+const BASE_URL = ""
 //const BASE_URL = process.env.REACT_APP_BASE_URL
 
 const currenturl = "https://dummyjson.com";
@@ -14,7 +14,6 @@ interface IParams {
 };
 
 
-
 class RepoServices implements IRepoServices {
   getUserInfo(username: string) {
     return httpRequest.get(BASE_URL + username);
@@ -22,14 +21,6 @@ class RepoServices implements IRepoServices {
   getRepo(params: IParams) {
     const { username, page, perPage } = params;
     return httpRequest.get(BASE_URL + username + `/repos?type=owner&sort=stars&direction=asc&page=${page}&per_page=${perPage}`)
-  }
-  getFollowers(params: IParams) {
-    const { username, page, perPage } = params;
-    return httpRequest.get(BASE_URL + username + `/followers?type=owner&sort=stars&direction=asc&page=${page}&per_page=${perPage}`)
-  }
-  getFollowing(params: IParams) {
-    const { username, page, perPage } = params;
-    return httpRequest.get(BASE_URL + username + `/following?type=owner&sort=stars&direction=asc&page=${page}&per_page=${perPage}`)
   }
 
   getImages() {
