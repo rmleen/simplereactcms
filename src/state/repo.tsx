@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosResponse } from "axios";
 import { IRepoState } from "../utils";
 import RepoServices from "../services";
-import { IPageData, IUserAuth, IUserLogin } from "../utils/interface";
+import { IPageData, IUserAuth, IUserLogin, IPost, IUserDetail } from "../utils/interface";
 
 const initialState: IRepoState = {
   userInfo: {
@@ -97,6 +97,21 @@ const initialState: IRepoState = {
   posts: {
     data: {
       posts: {
+        id: 0,
+        title: "",
+        body: "",
+        image: "",
+        views: 0,
+        userid: 0
+      },
+      limit:0
+    },
+
+    isLoading: false,
+  },
+  postDetail:{
+    data: {
+      posts: {
 
         id: 0,
         title: "",
@@ -125,33 +140,17 @@ export const getUser = createAsyncThunk("getUser", async (username?: string) => 
       return res.data;
     }
     else {
-      let username = "";
+      let username = "DSDmark";
       const res: AxiosResponse = await RepoServices.getUserInfo(username);
       return res.data;
     }
   } catch (err) {
-    return null;
+    console.log(err)
+    let username = "DSDmark";
+    const res: AxiosResponse = await RepoServices.getUserInfo(username);
+    return res.data;
   }
 })
-
-export const getRepoInfo = createAsyncThunk("getRepoInfo", async (params: IPageData, { rejectWithValue }) => {
-  let res: AxiosResponse;
-  try {
-    if (params.username) {
-      res = await RepoServices.getRepo(params)
-      return res.data;
-
-    } else {
-      params.username = "";
-      res = await RepoServices.getRepo(params)
-      return res.data;
-    }
-  } catch (err) {
-
-    return rejectWithValue("Failed to retrieve");
-  }
-})
-
 
 export const getUserAuth = createAsyncThunk("getUserAuth", async (params: IUserLogin, { rejectWithValue }) => {
   let res: AxiosResponse;
@@ -165,10 +164,44 @@ export const getUserAuth = createAsyncThunk("getUserAuth", async (params: IUserL
   }
 })
 
+export const editUserDetail = createAsyncThunk("editUserDetail", async (params: IUserDetail, { rejectWithValue }) => {
+  let res: AxiosResponse;
+  try {
+      res = await RepoServices.editUserDetail(params, "")
+      return res.data;
+    
+  } catch (err) {
+    return rejectWithValue("Failed to retrieve");
+  }
+})
+
+
 export const getLatestPost = createAsyncThunk("getAllPost", async (params: IPageData, { rejectWithValue }) => {
   let res: AxiosResponse;
   try {
       res = await RepoServices.getLatestPosts()
+      return res.data;
+    
+  } catch (err) {
+    return rejectWithValue("Failed to retrieve");
+  }
+})
+
+export const getSinglePost = createAsyncThunk("getSinglePost", async (postId: string, { rejectWithValue }) => {
+  let res: AxiosResponse;
+  try {
+      res = await RepoServices.getSinglePost(postId)
+      return res.data;
+    
+  } catch (err) {
+    return rejectWithValue("Failed to retrieve");
+  }
+})
+
+export const addNewPost = createAsyncThunk("addNewPost", async (params: IPost, { rejectWithValue }) => {
+  let res: AxiosResponse;
+  try {
+      res = await RepoServices.addNewPost(params, "")
       return res.data;
     
   } catch (err) {
@@ -189,7 +222,6 @@ export const getGalleryImage = createAsyncThunk("getGalleryImage", async (params
     return res.data;
   }
 })
-
 
 export const repoSlice = createSlice({
   name: "repo",
@@ -217,24 +249,14 @@ export const repoSlice = createSlice({
       }
     });
     
-      builder.addCase(getUser.pending, (state) => {
+    builder.addCase(getUser.pending, (state) => {
         state.userInfo.isLoading = false;
       });
-      builder.addCase(getUser.rejected, (state) => {
+    builder.addCase(getUser.rejected, (state) => {
         state.userInfo.isLoading = false;
       });
       
-      builder.addCase(getRepoInfo.fulfilled, (state, action) => {
-        return { ...state, repoInfo: { data: { ...action.payload }, isLoading: true } }
-      });
-      builder.addCase(getRepoInfo.pending, (state) => {
-        state.repoInfo.isLoading = false;
-      });
-      builder.addCase(getRepoInfo.rejected, (state) => {
-        state.repoInfo.isLoading = false;
-      });
-      
-      builder.addCase(getUserAuth.fulfilled, (state, action) => {
+    builder.addCase(getUserAuth.fulfilled, (state, action) => {
         let m = {
           name: "",
           password: "",
@@ -251,6 +273,7 @@ export const repoSlice = createSlice({
           m.name = action.payload.username;
           m.image = action.payload.image;
           m.firstName = action.payload.firstName;
+          m.id = action.payload.id;
           islogin = true;
           console.log('buildm', m)
         }else if ('message 'in action.payload){
@@ -258,10 +281,10 @@ export const repoSlice = createSlice({
         };
         return { ...state, userAuth: { data: m, isLogin: islogin, isLoading: true } };
       });
-      builder.addCase(getUserAuth.pending, (state) => {
+    builder.addCase(getUserAuth.pending, (state) => {
         state.userAuth.isLoading = false;
       });
-      builder.addCase(getUserAuth.rejected, (state) => {
+    builder.addCase(getUserAuth.rejected, (state) => {
         state.userAuth.isLoading = true;
         state.userAuth.data.name = "Invalid";
       });
@@ -276,6 +299,60 @@ export const repoSlice = createSlice({
       builder.addCase(getLatestPost.rejected, (state) => {
         state.posts.isLoading = false;
       });
+
+      builder.addCase(getSinglePost.fulfilled, (state, action) => {
+        let m = {
+          posts: {
+            id: 0,
+            title: "",
+            body: "",
+            image: "",
+            views: 0,
+            userid: 0,
+          },
+          limit:0
+        }
+        if ('id' in action.payload && action.payload.id !== undefined && action.payload.id != null ){
+          m.posts.id = action.payload.id;
+          m.posts.title = action.payload.title;
+          m.posts.body = action.payload.body;
+          m.posts.image = action.payload.image;
+          m.posts.views = action.payload.views;
+        }
+        return { ...state, postDetail: { data: m, isLoading: true } }
+      });
+      builder.addCase(getSinglePost.pending, (state) => {
+        state.postDetail.isLoading = false;
+      });
+      builder.addCase(getSinglePost.rejected, (state) => {
+        state.postDetail.isLoading = false;
+      });
+
+      builder.addCase(addNewPost.fulfilled, (state, action) => {
+        let m = {
+          posts: {
+            id: 0,
+            title: "",
+            body: "",
+            image: "",
+            views: 0,
+          },
+          limit:0
+        }
+        if ('id' in action.payload && action.payload.id !== undefined && action.payload.id != null ){
+          m.posts.id = action.payload.id;
+          m.posts.title = action.payload.title;
+        }
+        return { ...state, postDetail: { data: m, isLoading: true } }
+      });
+      builder.addCase(addNewPost.pending, (state) => {
+        state.postDetail.isLoading = false;
+      });
+      builder.addCase(addNewPost.rejected, (state) => {
+        state.postDetail.isLoading = false;
+      });
+
+
       builder.addCase(getGalleryImage.fulfilled, (state, action) => {
         return { ...state, galleryImages: { data: { ...action.payload }, isLoading: true } }
       });
