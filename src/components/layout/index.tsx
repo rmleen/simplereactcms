@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { ThemeProvider, CssBaseline, } from "@mui/material";
 import { createAppTheme, IProps } from "../../utils/";
 import { RootState } from "../../state";
-
+import '../../scss/index.scss';
 
 const MainLayout = ({ children }: IProps) => {
   const { preferredTheme } = useSelector((state: RootState) => state.repo);

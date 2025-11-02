@@ -56,7 +56,7 @@ const Navbar = () => {
     dispatch(getUserAuth(params)).then((resp) => {
       console.log('userAuthuserAuth',resp.payload);
       setisgetauthdispatch(true);
-      if('accessToken' in resp.payload && resp.payload.accessToken !== undefined && resp.payload.accessToken != null && resp.payload.accessToken != "" ){
+      if(resp.payload != null && 'accessToken' in resp.payload && resp.payload.accessToken !== undefined && resp.payload.accessToken != null && resp.payload.accessToken != "" ){
         setIsUserAuth(true);
         setUserFirstName(resp.payload.firstName);
         setUserImage(resp.payload["image"]);
@@ -161,9 +161,10 @@ const Navbar = () => {
         <Toolbar >
           <Grid container columnSpacing={2}>
             <Grid>
-              <MuiLink component={RouterLink} to="" >
+              <MuiLink component={RouterLink} to='' >
                 {isuserauth && userimage != "" ? 
-                  <img style={{ borderRadius: "50%" }} src={userimage} height={40} /> :
+                  <img style={{ borderRadius: "50%" }} src={userimage} height={40} />
+                  :
                   <Skeleton variant="circular" height={40} width={40} />
                 }
               </MuiLink>
