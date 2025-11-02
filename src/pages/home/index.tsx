@@ -2,6 +2,9 @@ import { styled } from '@mui/material/styles';
 import { Avatar, Box, Button, Link as MuiLink, Grid, Typography, useMediaQuery, Stack, Skeleton } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../state';
+import NewServices  from '../../components/newservices';
+import NewProcess  from '../../components/newprocess';
+import MovingText  from '../../components/movingText';
 
 const VideoBackground = styled('div')({
   position: "relative",
@@ -26,13 +29,22 @@ const Home = () => {
   const { userInfo: { isLoading, data: { name, login, avatar_url, bio, hireable, blog } } } = useSelector((state: RootState) => state.repo)
   
   return (
+    <div>
     <Box sx={{ position: "relative" }}>
       <VideoBackground >
         <video controls={false} autoPlay={true} loop={true}>
           <source src={video} type="video/mp4" />
         </video>
       </VideoBackground>
+      
     </Box>
+    <NewProcess> </NewProcess>
+    <NewServices> </NewServices>
+    <MovingText text="Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor" />
+    </div>
+    
+    
+    
   )
 }
 

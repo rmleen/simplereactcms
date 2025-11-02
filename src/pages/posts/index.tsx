@@ -4,6 +4,8 @@ import { getLatestPost } from "../../state/repo";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { IPageData } from "../../utils/interface";
+import { Box } from "@mui/material"
+import PageHeading from "../../components/pageHeading";
 import CardPostData from "../../components/cardPostData";
 
 const Posts = () => {
@@ -27,6 +29,8 @@ const Posts = () => {
 
   return (
     <>
+      <PageHeading  title={'Posts'}/>
+      <Box sx={{ m: 11.5 }} />
       <CardPostData postdata={posts} />
       <Pagination totalEntries={posts.data.limit} setPageData={setState} />
     </>

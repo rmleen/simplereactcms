@@ -25,7 +25,7 @@ const ErrorMessage = styled(Typography)({
 const NotFound = () => {
   return (
     <ErrorBox>
-      <ErrorHeading>404</ErrorHeading>
+      <ErrorHeading>404 NotFound</ErrorHeading>
       <ErrorMessage>
         Oops! The page you're looking for cannot be found.
       </ErrorMessage>
