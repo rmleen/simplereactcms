@@ -1,4 +1,10 @@
 export { default as Home } from "./home"
 export { default as Gallery } from "./galleries"
 export { default as Posts } from "./posts"
+export { default as PostCreate } from "./auth/postcreate"
+export { default as PostDetails } from "./postdetails"
+export { default as Service } from "./services"
+export { default as AboutUs } from "./about"
+export { default as Terms } from "./about/terms"
 export { default as NotFound } from "./404"
+
