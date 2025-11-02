@@ -36,6 +36,21 @@ export interface IUserDetail {
 export interface IPost {
   data: {
     posts:{
+      id: number | null,
+      title: string,
+      body: string,
+      image: string,
+      views: number | null,
+      userid: number | null
+    },
+    limit: number;
+  },
+  isLoading: boolean;
+}
+
+export interface IPostDetail {
+  data: {
+    posts:{
       id:number,
       title: string,
       body: string,
@@ -150,6 +165,7 @@ export interface IRepoState {
   userAuth: IUserAuth,
   userDetail: IUserDetail,
   posts: IPost,
+  postDetail: IPostDetail,
   //
   userInfo: IUser,
   repoInfo: IRepo,
