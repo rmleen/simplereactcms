@@ -1,12 +1,8 @@
 export { default as MainLayout } from "./layout/"
 export { default as Header } from "./header"
-//export { default as Cards } from "./cards/"
 export { default as CardImageData } from "./cardImageData"
 export { default as CardPostata } from "./cardPostData"
-//export { default as DetailCard } from "./detailCard"
 export { default as Pagination } from "./pagination"
 export { default as Footer } from "./footer"
-
-
 export { default as NewHeader } from "./newheader"
 export { default as NewFooter } from "./newfooter"
