@@ -49,7 +49,7 @@ export default function NewServices({ variant }:any) {
                 <div className="col-lg-12 col-sm-12">
                   <CardSectionData
                     title="Planning"
-                    link="/service"
+                    link="/Services"
                     src="https://dummyjson.com/image/180"
                     alt="Service"
                   />
@@ -61,7 +61,7 @@ export default function NewServices({ variant }:any) {
                 <div className="col-lg-3 col-sm-6">
                   <CardSectionData
                     title="Development"
-                    link="/service"
+                    link="/Services"
                     src="https://dummyjson.com/image/180"
                     alt="Service"
                   />
@@ -75,7 +75,7 @@ export default function NewServices({ variant }:any) {
                 <div className="col-lg-12 col-sm-12">
                   <CardSectionData
                     title="Design"
-                    link="/service"
+                    link="/Services"
                     src="https://dummyjson.com/image/180"
                     alt="Service"
                   />
@@ -88,7 +88,7 @@ export default function NewServices({ variant }:any) {
                 <div className="col-lg-12 col-sm-12">
                   <CardSectionData
                     title="Analysis"
-                    link="/service"
+                    link="/Services"
                     src="https://dummyjson.com/image/180"
                     alt="Service"
                   />
@@ -99,7 +99,7 @@ export default function NewServices({ variant }:any) {
                 <div className="col-lg-3 col-sm-6">
                   <CardSectionData
                     title="Technology"
-                    link="/service"
+                    link="/Services"
                     src="https://dummyjson.com/image/180"
                     alt="Service"
                   />
